@@ -44,64 +44,113 @@ public class Dia1 {
         System.out.println("Camper agregado exitosamente.");
     }
     
-    public static void main(String[] args) {
-        Dia1 dia1 = new Dia1();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bienvenido usuario");
-        System.out.println("¿Que deseas hacer el día de hoy?");
-        System.out.printf("1. modulo campers%n2. modulo trainers%n3. modulo coordinadores%n4. modulo de reportes%n ");
-        int option = scanner.nextInt();
-        scanner.nextLine();
-        if (option == 1){
-            System.out.print("\033[H\033[2J");
-            System.out.println("Bienvenido al modulo de campers");
-            System.out.println("¿Que deseas hacer el dia de hoy?");
-            System.out.printf("1. ver campers%n2. ver trainers%n");
-            Scanner sc1 = new Scanner(System.in);
-            option = scanner.nextInt();
-            scanner.nextLine();
-            if (option == 1){
-                
-            } else if (option == 2){
-                
+    private Camper findCamperById(int identificacion){
+        for(Camper camper : campers){
+            if(camper.getIdentificacion() == identificacion){
+                return camper;
             }
+        } return null;
+    }
+    
+    public void deleteCamper() {
+    System.out.print("Ingrese identificación del camper a eliminar: ");
+    int identificacion = scanner.nextInt();
+    Camper camper = findCamperById(identificacion);
+
+    if (camper == null) {
+        System.out.println("Camper no encontrado.");
+    } else {
+        campers.remove(camper);
+        System.out.println("Camper eliminado exitosamente.");
         }
-        else if(option == 2){
-            System.out.println("Bienvenido al modulo de trainers");
-            System.out.println("¿Que deseas hacer el dia de hoy?");
-            System.out.printf("1. ver trainers%n3. ver campers%n ");
-            
-        }else if (option == 3){
-            System.out.println("Bienvenido al modulo de Coordinadores");
-            System.out.println("¿Que deseas hacer el dia de hoy?");
-            System.out.printf("1. opciones campers%n2. opciones trainers%n");
-            option = scanner.nextInt();
-            scanner.nextLine();
-            switch (option){
-                case 1:
-                    System.out.println("Entrando a las opciones de modificacion de informacion de campers...");
-                    System.out.println("¿Que deseas hacer? ");
-                    System.out.printf("1. añadir nuevo camper%n2. ver campers existentes%n3. actualizar camper%n4. eliminar campers%n ");
-                    option = scanner.nextInt();
-                    scanner.nextLine();
-                    switch (option){
-                        case 1:
-                            dia1.addCamper();
-                            break;
-                        case 2:
-                            break;
-                        case 3:    
-                            break;
-                        case 4:   
-                            break;
-                    }
-                    break;
-                case 2:
-                    System.out.println("Entrando a las opciones de modificacion de informacion de trainers...");
-                    System.out.println("¿Que deseas hacer? ");
-                    System.out.printf("1. añadir nuevo trainer%n2. ver trainers existentes%n3. actualizar trainer%ne4. eliminar trainers%n ");           
-                    break;
+    }
+    
+    public void viewCamper(){
+        if(campers.isEmpty()){
+            System.out.println("No hay ningún camper registrado");
+        } else {
+            for (Camper camper : campers){
+                System.out.println(camper);
             }
         }
     }
+    
+public void updateCamper() {
+    System.out.print("Ingrese identificación del camper a actualizar: ");
+    int identificacion = scanner.nextInt();
+    scanner.nextLine(); // Clear the buffer
+    Camper camper = findCamperById(identificacion);
+
+    if (camper == null) {
+        System.out.println("Camper no encontrado.");
+    } else {
+        System.out.print("Ingrese nuevos nombres (actual: " + camper.getNombres() + "): ");
+        String nombres = scanner.nextLine();
+        System.out.print("Ingrese nuevos apellidos (actual: " + camper.getApellidos() + "): ");
+        String apellidos = scanner.nextLine();
+        System.out.print("Ingrese nueva dirección (actual: " + camper.getDireccion() + "): ");
+        String direccion = scanner.nextLine();
+        System.out.print("Ingrese nuevo acudiente (actual: " + camper.getAcudiente() + "): ");
+        String acudiente = scanner.nextLine();
+        System.out.print("Ingrese nuevo teléfono celular (actual: " + camper.getNumeroCelular() + "): ");
+        int numeroCelular = scanner.nextInt();
+        scanner.nextLine(); // Clear the buffer
+        System.out.print("Ingrese nuevo teléfono fijo (actual: " + camper.getNumeroFijo() + "): ");
+        int numeroFijo = scanner.nextInt();
+        scanner.nextLine(); // Clear the buffer
+        System.out.print("Ingrese nuevo estado (actual: " + camper.getEstado() + "): ");
+        String estado = scanner.nextLine();
+        System.out.print("Ingrese nuevo riesgo (actual: " + camper.getRiesgo() + "): ");
+        String riesgo = scanner.nextLine();
+
+        camper.setNombres(nombres);
+        camper.setApellidos(apellidos);
+        camper.setDireccion(direccion);
+        camper.setAcudiente(acudiente);
+        camper.setNumeroCelular(numeroCelular);
+        camper.setNumeroFijo(numeroFijo);
+        camper.setEstado(estado);
+        camper.setRiesgo(riesgo);
+
+        System.out.println("Camper actualizado exitosamente.");
+    }
 }
+    
+    public static void main(String[] args) {
+            Dia1 dia1 = new Dia1();
+            Scanner scanner = new Scanner(System.in);
+            int opcion;
+
+            do {
+                System.out.println("\nMenu:");
+                System.out.println("1. Agregar Camper");
+                System.out.println("2. Ver Campers");
+                System.out.println("3. Actualizar Camper");
+                System.out.println("4. Eliminar Camper");
+                System.out.println("5. Salir");
+                System.out.print("Seleccione una opción: ");
+                opcion = scanner.nextInt();
+                scanner.nextLine();  // Clear the buffer
+                
+                switch (opcion) {
+                    case 1:
+                        dia1.addCamper();
+                        break;
+                    case 2:
+                        dia1.viewCamper();
+                        break;
+                    case 3:
+                        dia1.updateCamper();
+                        break;
+                    case 4:
+                        dia1.deleteCamper();
+                        break;
+                    case 5:
+                        System.out.println("Saliendo...");
+                        break;
+                    default:
+                        System.out.println("Opción inválida. Intente de nuevo.");
+                }
+            } while (opcion != 5);
+        }
+    }
