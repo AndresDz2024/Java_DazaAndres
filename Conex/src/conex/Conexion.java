@@ -9,13 +9,17 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
+import java.util.Scanner;
 /**
  *
  * @author DZ
  */
 public class Conexion {
     private Connection con;
-
+    private Scanner scanner;
+    public Conexion(){
+        scanner = new Scanner(System.in);
+    }
     public Connection establecerConexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,27 +35,40 @@ public class Conexion {
         }
         return con;
     }
-
-    public static void main(String[] args) {
+    
+    public void VerHospitales(){
         Conexion cn = new Conexion();
+        Scanner sc = new Scanner(System.in);
         Connection con = cn.establecerConexion();
         PreparedStatement ps = null;
         Statement st;
         ResultSet rs;
-        
         try {
-            //st = con.createStatement();
-            //rs = st.executeQuery("SELECT id_hospital, nombre, direccion FROM hospitales");
-            ps = con.prepareStatement("insert into hospitales (nombre, direccion) values (?,?)");
-            ps.setString(1, "Hospital Increíble");
-            ps.setString(2, "Calle imposible increible");
-            ps.executeUpdate();
-            //while (rs.next()) {
-              //  System.out.println(rs.getInt("id_hospital") + " " + rs.getString("nombre") + " " + rs.getString("direccion"));
-            //}
-            con.close();
-        } catch (Exception e) {
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT id_hospital, nombre, direccion FROM hospitales");
+            while (rs.next()){
+                System.out.println(rs.getInt("id_hospital") + " " + rs.getString("nombre") + " " + rs.getString("direccion"));
+            }
+        }catch (Exception e){    
             System.err.println("Error al ejecutar la consulta: " + e);
-        }     
+        }
+    }
+    public static void main(String[] args) {
+        Conexion cn = new Conexion();
+        Scanner sc = new Scanner(System.in);
+        Connection con = cn.establecerConexion();
+        PreparedStatement ps = null;
+        Statement st;
+        ResultSet rs;
+        int option;
+        do {
+            System.out.printf("Bienvenido Usuario%n ¿Que deseas hacer el dia de hoy? ");
+            option = sc.nextInt();
+            switch (option){
+                case 1:
+                    cn.VerHospitales();
+                    break;
+            }
+        } while (option != 5);
     }
 }
