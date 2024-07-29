@@ -88,5 +88,3 @@ CREATE TABLE equipo_medico (
     FOREIGN KEY (id_doctores_asociados) REFERENCES doctores_asociados(id_persona),
     FOREIGN KEY (id_doctores_junior) REFERENCES doctores_junior(id_persona)
 );
-
-insert into hospitales (id_hospital, nombre, direccion) values (1, "Hospital Internacional", "Calle 9 # 34");
