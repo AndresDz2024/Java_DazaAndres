@@ -3,17 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package conex;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
 /**
  *
  * @author DZ
@@ -24,29 +20,17 @@ public class Conexion {
     public Conexion(){
         scanner = new Scanner(System.in);
     }
-    
     public Connection establecerConexion() {
-        Properties props = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                throw new IllegalStateException("Archivo config.properties no encontrado");
-            }
-
-            props.load(input);
-
-            String url = props.getProperty("Url");
-            String user = props.getProperty("Usuario");
-            String password = props.getProperty("Contrasena");
-
-            if (url == null || user == null || password == null) {
-                throw new IllegalStateException("Una o más propiedades de conexión no están definidas");
-            }
-
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexión exitosa a la base de datos");
-        } catch (IOException | ClassNotFoundException | SQLException | IllegalStateException e) {
-            System.err.println("Error en la conexión :(, error: " + e);
+            con = DriverManager.getConnection(
+                "jdbc:mysql://bpxin0fmvng3crfyc4kq-mysql.services.clever-cloud.com:3306/bpxin0fmvng3crfyc4kq",
+                "umebuygci6oisixr",
+                "hW7IZzjTQX2ahZG8x9zT"
+            );
+            //JOptionPane.showMessageDialog(null, "La conexión es un éxito :)");
+        } catch (Exception e) {
+            System.err.println("Error en la conexión :(, error:" + e);
             JOptionPane.showMessageDialog(null, "Error en la conexión: " + e.toString());
         }
         return con;
