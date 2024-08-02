@@ -10,7 +10,6 @@ package dia6;
  */
 
 import java.util.Date;
-import java.util.Scanner;
 
 public class Liga extends Partido {
     private int jornada;
