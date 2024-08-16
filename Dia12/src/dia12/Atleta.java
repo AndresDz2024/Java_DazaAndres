@@ -28,7 +28,7 @@ public class Atleta implements Runnable {
                 System.out.println("Atleta " + numero + " comienza a correr...");
                 
                 long tiempoInicio = System.currentTimeMillis();
-
+                
                 Thread.sleep((long) (Math.random() * 2000 + 9000));
 
                 long tiempoFin = System.currentTimeMillis();
